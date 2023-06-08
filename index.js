@@ -1,18 +1,19 @@
 require('dotenv').config();
 const bodyParser = require("body-parser");
 const express = require('express');
+const dns = require("dns")
 const cors = require('cors');
 const app = express();
-const dns = require("dns")
 // Basic Configuration
 const port = process.env.PORT || 3000;
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(cors());
 
-app.use('/public', express.static(`${process.cwd()}/public`));
+app.use(cors({optionsSuccessStatus: 200}));
+app.use(bodyParser.urlencoded({extended: false}))
+
+app.use('/public', express.static(`/public`));
 
 app.get('/', function (req, res) {
-    res.sendFile(process.cwd() + '/views/index.html');
+    res.sendFile(__dirname + '/views/index.html');
 });
 
 let urlMem = [];
