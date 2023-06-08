@@ -24,18 +24,18 @@ let urlMem = [];
     }, 1000000)
 })()
 
+// dns????
+
 app.post('/api/shorturl', (req, res) => {
     const url = req.body.url
-    dns.lookup(`${url}`, (err, address) => {
-        if (err) {
-            return res.json({error: 'invalid url'})
-        }
+    if (!url.match(/^(https?:\/\/)[^\s.]+(\.[^\s.]+)+\/[^\s]*/)) {
+        return res.json({ error: "invalid url" });
+    }
         urlMem.push(url)
         return res.json({
             original_url: url,
             short_url: urlMem.length
         })
-    })
 
 })
 
